@@ -60,6 +60,10 @@ int main() {
   std::cout << dp[row_len - 1][col_len - 1] << "\n";
 
   // Back tracking
+  // Precendence (starting at dp[0][0]): Diagonal (match/mismatch) > Horizontal
+  // (deletion) > Vertical (insertion)
+  // Precedence (starting at dp[row_len -1][col_len - 1]): Vertical (insertion)
+  // > Horizontal (deletion) > Diagonal (match/mismatch)
   int r = row_len - 1;
   int c = col_len - 1;
   std::string align_x = "";
@@ -78,9 +82,9 @@ int main() {
       c--;
     }
     // Match/mismatch
-    else if (dp[r][c] ==
-        dp[r - 1][c - 1] +
-            score_table[dna_char_to_int[y_str[r]]][dna_char_to_int[x_str[c]]]) {
+    else if (dp[r][c] == dp[r - 1][c - 1] +
+                             score_table[dna_char_to_int[y_str[r]]]
+                                        [dna_char_to_int[x_str[c]]]) {
       align_x = x_str[c] + align_x;
       align_y = y_str[r] + align_y;
       r--;
